@@ -1,5 +1,10 @@
 # Changelog
 
-## vNEXT
+## v1.0.0
 
 Forked from **github.com/dontlaugh/packer-plugin-lxd**.
+
+### Changed
+
+* All the references to lxd and lxc are changed to incus
+
