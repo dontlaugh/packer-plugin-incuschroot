@@ -10,7 +10,7 @@ To install this plugin, copy and paste this code into your Packer configuration,
 packer {
   required_plugins {
     lxd = {
-      source  = "github.com/hashicorp/lxd"
+      source  = "github.com/dontlaugh/incus"
       version = "~> 1"
     }
   }

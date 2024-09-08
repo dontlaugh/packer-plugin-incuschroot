@@ -30,5 +30,5 @@ $ packer plugins install github.com/dontlaugh/incus"
 
 TODO: fix this link
 
-* [incus](/packer/integrations/hashicorp/lxd/latest/components/builder/lxd) - The Incus builder builds images with LXD by starting an instance, provisioning it,  
-  and exporting it as a tar.gz archive of the root file system.
+* [incus](/packer/integrations/hashicorp/lxd/latest/components/builder/lxd) - The Incus builder builds images with LXD 
+  by starting an instance, provisioning it, and exporting it as a tar.gz archive of the root file system.
