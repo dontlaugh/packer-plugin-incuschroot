@@ -1,10 +1,7 @@
 
 source "incus" "incus-ubuntu" {
   image = "images:ubuntu/22.04"
-  output_image = "repacked-ubuntu"
-  # publish_properties {
-  #   description = "Trivial repackage with Packer"
-  # }
+  output_image = "repacked-ubuntu-${formatdate("YYYYMMDDhhmmss", timestamp())}"
 }
 
 build {
