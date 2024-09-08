@@ -1,7 +1,7 @@
 // Copyright (c) HashiCorp, Inc.
 // SPDX-License-Identifier: MPL-2.0
 
-package lxd
+package incus
 
 import (
 	"context"
@@ -13,8 +13,8 @@ import (
 	"github.com/hashicorp/packer-plugin-sdk/template/interpolate"
 )
 
-// The unique ID for this builder
-const BuilderId = "lxd"
+// BuilderId is the unique ID for this builder.
+const BuilderId = "incus"
 
 type wrappedCommandTemplate struct {
 	Command string

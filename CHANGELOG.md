@@ -2,4 +2,4 @@
 
 ## vNEXT
 
-Forked from **github.com/hashicorp/packer-plugin-lxd**.
+Forked from **github.com/dontlaugh/packer-plugin-lxd**.
