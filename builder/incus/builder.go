@@ -48,7 +48,7 @@ func (b *Builder) Run(ctx context.Context, ui packersdk.Ui, hook packersdk.Hook)
 		&stepPublish{},
 	}
 
-	// Setup the state bag
+	// Set up the state bag
 	state := new(multistep.BasicStateBag)
 	state.Put("config", &b.config)
 	state.Put("hook", hook)
