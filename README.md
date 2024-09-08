@@ -29,4 +29,8 @@ packer {
 }
 ```
 
+## Development
 
+```
+make install-packer-sdc
+```

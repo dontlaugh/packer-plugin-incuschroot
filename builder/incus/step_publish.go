@@ -14,9 +14,9 @@ import (
 
 type stepPublish struct{}
 
-func (s *stepPublish) Run(ctx context.Context, state multistep.StateBag) multistep.StepAction {
+func (s *stepPublish) Run(_ctx context.Context, state multistep.StateBag) multistep.StepAction {
 
-	var remote string = ""
+	var remote string
 
 	config := state.Get("config").(*Config)
 	ui := state.Get("ui").(packersdk.Ui)
@@ -27,15 +27,15 @@ func (s *stepPublish) Run(ctx context.Context, state multistep.StateBag) multist
 	}
 
 	name := config.ContainerName
-	stop_args := []string{
+	stopArgs := []string{
 		// We created the container with "--ephemeral=false" so we know it is safe to stop.
 		"stop", name,
 	}
 
-	ui.Say("Stopping container...")
-	_, err := LXDCommand(stop_args...)
+	ui.Say("Stopping instance...")
+	_, err := IncusCommand(stopArgs...)
 	if err != nil {
-		err := fmt.Errorf("Error stopping container: %s", err)
+		err := fmt.Errorf("Error stopping instance: %s", err)
 		state.Put("error", err)
 		ui.Error(err.Error())
 		return multistep.ActionHalt
@@ -45,18 +45,18 @@ func (s *stepPublish) Run(ctx context.Context, state multistep.StateBag) multist
 		remote = config.PublishRemoteName + ":"
 	}
 
-	publish_args := []string{
+	publishArgs := []string{
 		"publish", name, remote, "--alias", config.OutputImage,
 	}
 
 	for k, v := range config.PublishProperties {
-		publish_args = append(publish_args, fmt.Sprintf("%s=%s", k, v))
+		publishArgs = append(publishArgs, fmt.Sprintf("%s=%s", k, v))
 	}
 
-	ui.Say("Publishing container...")
-	stdoutString, err := LXDCommand(publish_args...)
+	ui.Say("Publishing image...")
+	stdoutString, err := IncusCommand(publishArgs...)
 	if err != nil {
-		err := fmt.Errorf("Error publishing container: %s", err)
+		err := fmt.Errorf("Error publishing image: %s", err)
 		state.Put("error", err)
 		ui.Error(err.Error())
 		return multistep.ActionHalt
@@ -72,4 +72,6 @@ func (s *stepPublish) Run(ctx context.Context, state multistep.StateBag) multist
 	return multistep.ActionContinue
 }
 
-func (s *stepPublish) Cleanup(state multistep.StateBag) {}
+func (s *stepPublish) Cleanup(_state multistep.StateBag) {
+	/* TODO: do we need something here? */
+}

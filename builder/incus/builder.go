@@ -43,7 +43,7 @@ func (b *Builder) Run(ctx context.Context, ui packersdk.Ui, hook packersdk.Hook)
 	}
 
 	steps := []multistep.Step{
-		&stepLxdLaunch{},
+		&stepIncusLaunch{},
 		&StepProvision{},
 		&stepPublish{},
 	}

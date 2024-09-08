@@ -4,12 +4,12 @@
 # For full specification on the configuration of this file visit:
 # https://github.com/hashicorp/integration-template#metadata-configuration
 integration {
-  name = "LXD"
-  description = "The LXD plugin can be used with HashiCorp Packer to create OCI images with LXD."
-  identifier = "packer/hashicorp/lxd"
+  name = "Incus"
+  description = "The Incus plugin can be used with HashiCorp Packer to create Incus-compatible VM and container images."
+  identifier = "packer/dontlaugh/incus"
   component {
     type = "builder"
-    name = "LXD"
-    slug = "lxd"
+    name = "Incus"
+    slug = "incus"
   }
 }

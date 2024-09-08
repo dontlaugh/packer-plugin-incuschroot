@@ -14,9 +14,9 @@ import (
 	packersdk "github.com/hashicorp/packer-plugin-sdk/packer"
 )
 
-type stepLxdLaunch struct{}
+type stepIncusLaunch struct{}
 
-func (s *stepLxdLaunch) Run(ctx context.Context, state multistep.StateBag) multistep.StepAction {
+func (s *stepIncusLaunch) Run(ctx context.Context, state multistep.StateBag) multistep.StepAction {
 	config := state.Get("config").(*Config)
 	ui := state.Get("ui").(packersdk.Ui)
 
@@ -34,14 +34,14 @@ func (s *stepLxdLaunch) Run(ctx context.Context, state multistep.StateBag) multi
 	}
 
 	ui.Say("Creating container...")
-	_, err := LXDCommand(launch_args...)
+	_, err := IncusCommand(launch_args...)
 	if err != nil {
 		err := fmt.Errorf("Error creating container: %s", err)
 		state.Put("error", err)
 		ui.Error(err.Error())
 		return multistep.ActionHalt
 	}
-	sleep_seconds, err := strconv.Atoi(config.InitSleep)
+	sleepSeconds, err := strconv.Atoi(config.InitSleep)
 	if err != nil {
 		err := fmt.Errorf("Error parsing InitSleep into int: %s", err)
 		state.Put("error", err)
@@ -49,15 +49,15 @@ func (s *stepLxdLaunch) Run(ctx context.Context, state multistep.StateBag) multi
 		return multistep.ActionHalt
 	}
 
-	// TODO: Should we check `lxc info <container>` for "Running"?
+	// TODO: Should we check `incus info <container>` for "Running"?
 	// We have to do this so /tmp doesn't get cleared and lose our provisioner scripts.
 
-	time.Sleep(time.Duration(sleep_seconds) * time.Second)
-	log.Printf("Sleeping for %d seconds...", sleep_seconds)
+	time.Sleep(time.Duration(sleepSeconds) * time.Second)
+	log.Printf("Sleeping for %d seconds...", sleepSeconds)
 	return multistep.ActionContinue
 }
 
-func (s *stepLxdLaunch) Cleanup(state multistep.StateBag) {
+func (s *stepIncusLaunch) Cleanup(state multistep.StateBag) {
 	config := state.Get("config").(*Config)
 	ui := state.Get("ui").(packersdk.Ui)
 
@@ -65,12 +65,12 @@ func (s *stepLxdLaunch) Cleanup(state multistep.StateBag) {
 		return
 	}
 
-	cleanup_args := []string{
+	cleanupArgs := []string{
 		"delete", "--force", config.ContainerName,
 	}
 
 	ui.Say("Unregistering and deleting deleting container...")
-	if _, err := LXDCommand(cleanup_args...); err != nil {
+	if _, err := IncusCommand(cleanupArgs...); err != nil {
 		ui.Error(fmt.Sprintf("Error deleting container: %s", err))
 	}
 }

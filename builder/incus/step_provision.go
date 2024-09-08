@@ -44,4 +44,6 @@ func (s *StepProvision) Run(ctx context.Context, state multistep.StateBag) multi
 	return multistep.ActionContinue
 }
 
-func (s *StepProvision) Cleanup(state multistep.StateBag) {}
+func (s *StepProvision) Cleanup(_state multistep.StateBag) {
+	/* TODO: do we need something here? */
+}

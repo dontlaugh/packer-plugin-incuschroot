@@ -51,7 +51,7 @@ func (c *Communicator) Start(ctx context.Context, cmd *packersdk.RemoteCmd) erro
 		}
 
 		log.Printf(
-			"lxc exec execution exited with '%d': '%s'",
+			"incus exec execution exited with '%d': '%s'",
 			exitStatus, cmd.Command)
 		cmd.SetExited(exitStatus)
 	}()
@@ -66,9 +66,7 @@ func (c *Communicator) Upload(dst string, r io.Reader, fi *os.FileInfo) error {
 	// find out if the place we are pushing to is a directory
 	testDirectoryCommand := fmt.Sprintf(`test -d "%s"`, dst)
 	cmd := &packersdk.RemoteCmd{Command: testDirectoryCommand}
-	err := c.Start(ctx, cmd)
-
-	if err != nil {
+	if err := c.Start(ctx, cmd); err != nil {
 		log.Printf("Unable to check whether remote path is a dir: %s", err)
 		return err
 	}
@@ -91,25 +89,25 @@ func (c *Communicator) Upload(dst string, r io.Reader, fi *os.FileInfo) error {
 	return command.Run()
 }
 
-func (c *Communicator) UploadDir(dst string, src string, exclude []string) error {
+func (c *Communicator) UploadDir(dst string, src string, _exclude []string) error {
 	fileDestination := fmt.Sprintf("%s/%s", c.ContainerName, dst)
 	if !strings.HasSuffix(src, "/") {
 		src += "/"
 	}
-	pushCommand := fmt.Sprintf("lxc file push --debug -pr %s* %s", src, fileDestination)
+	pushCommand := fmt.Sprintf("incus file push --debug -pr %s* %s", src, fileDestination)
 	log.Printf(pushCommand)
 	cp, err := c.CmdWrapper(pushCommand)
 	if err != nil {
-		log.Printf("Error running cp command: %s", err)
+		log.Printf("Error running directory copy command: %s", err)
 		return err
 	}
 
 	cpCmd := ShellCommand(cp)
 
-	log.Printf("Running cp command: %s", cp)
+	log.Printf("Running directory copyh command: %s", cp)
 	err = cpCmd.Run()
 	if err != nil {
-		log.Printf("Error running cp command: %s", err)
+		log.Printf("Error running directory copy command: %s", err)
 		return err
 	}
 
@@ -117,12 +115,12 @@ func (c *Communicator) UploadDir(dst string, src string, exclude []string) error
 }
 
 func (c *Communicator) Download(src string, w io.Writer) error {
-	cpCmd, err := c.CmdWrapper(fmt.Sprintf("lxc file pull %s -", filepath.Join(c.ContainerName, src)))
+	cpCmd, err := c.CmdWrapper(fmt.Sprintf("incus file pull %s -", filepath.Join(c.ContainerName, src)))
 	if err != nil {
 		return err
 	}
 
-	log.Printf("Running copy command: %s", cpCmd)
+	log.Printf("Running copy command (download): %s", cpCmd)
 	command := ShellCommand(cpCmd)
 	command.Stdout = w
 
@@ -131,19 +129,19 @@ func (c *Communicator) Download(src string, w io.Writer) error {
 
 func (c *Communicator) DownloadDir(src string, dst string, exclude []string) error {
 	// TODO This could probably be "lxc exec <container> -- cd <src> && tar -czf - | tar -xzf - -C <dst>"
-	return fmt.Errorf("DownloadDir is not implemented for lxc")
+	return fmt.Errorf("DownloadDir is not implemented (yet)")
 }
 
 func (c *Communicator) Execute(commandString string) (*exec.Cmd, error) {
-	log.Printf("Executing with lxc exec in container: %s %s", c.ContainerName, commandString)
+	log.Printf("Executing with incus exec in container: %s %s", c.ContainerName, commandString)
 	command, err := c.CmdWrapper(
-		fmt.Sprintf("lxc exec %s -- /bin/sh -c \"%s\"", c.ContainerName, commandString))
+		fmt.Sprintf("incus exec %s -- /bin/sh -c \"%s\"", c.ContainerName, commandString))
 	if err != nil {
 		return nil, err
 	}
 
 	localCmd := ShellCommand(command)
-	log.Printf("Executing lxc exec: %s %#v", localCmd.Path, localCmd.Args)
+	log.Printf("Executing incus exec: %s %#v", localCmd.Path, localCmd.Args)
 
 	return localCmd, nil
 }
