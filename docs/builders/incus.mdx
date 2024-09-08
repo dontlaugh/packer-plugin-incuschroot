@@ -1,11 +1,9 @@
 ---
 description: >
-  The `incus` Packer builder builds containers for LXD. The builder starts an LXD
-
+  The `incus` Packer builder builds containers for Incus. The builder starts an Incus
   container, runs provisioners within this container, then saves the container
-  as
+  as an Incus image.
 
-  an LXD image.
 page_title: Incus - Builders
 nav_title: Incus
 ---
@@ -28,43 +26,29 @@ Below is a fully functioning example.
 **HCL**
 
 ```hcl
-source "incus" "lxd-xenial" {
-  image = "ubuntu-daily:xenial"
-  output_image = "ubuntu-xenial"
-  publish_properties {
-    description = "Trivial repackage with Packer"
-  }
+source "incus" "incus-ubuntu" {
+  image = "images:ubuntu/22.04"
+  output_image = "repacked-ubuntu"
 }
 
 build {
-  sources = ["lxd.lxd-xenial"]
+  sources = ["incus.incus-ubuntu"]
 }
 ```
 
 **JSON**
 
 ```json
-{
-  "builders": [
-    {
-      "type": "lxd",
-      "name": "lxd-xenial",
-      "image": "ubuntu-daily:xenial",
-      "output_image": "ubuntu-xenial",
-      "publish_properties": {
-        "description": "Trivial repackage with Packer"
-      }
-    }
-  ]
-}
+{}
 ```
 
 ## Configuration Reference
 
 ### Required:
 
-@include 'builder/lxd/Config-required.mdx'
+@include 'builder/incus/Config-required.mdx'
 
 ### Optional:
 
-@include 'builder/lxd/Config-not-required.mdx'
+@include 'builder/incus/Config-not-required.mdx'
+
