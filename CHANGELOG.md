@@ -1,5 +1,9 @@
 # Changelog
 
+## v1.0.2
+
+Testing the CI workflow
+
 ## v1.0.0
 
 Forked from **github.com/dontlaugh/packer-plugin-lxd**.
