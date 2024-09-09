@@ -3,9 +3,7 @@ Artifact BuilderId: `incus`
 
 The `incus` Packer builder builds containers for Incus. The builder starts an Incus
 container, runs provisioners within this container, then saves the container as
-an Incus image.
-
-The Incus builder requires the `incus-client` package.
+an Incus image. The Incus builder requires the `incus-client` package.
 
 ## Basic Example
 
