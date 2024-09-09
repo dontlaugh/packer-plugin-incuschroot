@@ -31,6 +31,10 @@ packer {
 
 ## Development
 
+Get the sdc tool from Hashicorp.
+
 ```
 make install-packer-sdc
 ```
+
+Then see [HACKING.md](./HACKING.md)
