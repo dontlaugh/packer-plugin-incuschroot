@@ -1,8 +1,12 @@
 # Changelog
 
-## v1.0.2
+## v1.0.3
 
 Testing the CI workflow
+
+### Added
+
+* Signed releases
 
 ## v1.0.0
 
