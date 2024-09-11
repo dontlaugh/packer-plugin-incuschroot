@@ -9,8 +9,8 @@ import (
 
 	"github.com/hashicorp/packer-plugin-sdk/plugin"
 
-	"github.com/dontlaugh/packer-plugin-incus/builder/incus"
-	"github.com/dontlaugh/packer-plugin-incus/version"
+	"github.com/dontlaugh/packer-plugin-incuschroot/builder/incus"
+	"github.com/dontlaugh/packer-plugin-incuschroot/version"
 )
 
 func main() {

@@ -1,15 +1,20 @@
-_Note: this is a brand new (Sep 2024) fork of the LXD plugin. You probably want [bketelsen/packer-plugin-incus](https://github.com/bketelsen/packer-plugin-incus)._
 
-# Packer Plugin Incus
+# Packer Plugin Incus Chroot
 
-Frienship ended with LXD. Incus is my new best friend.
 
+Goal: build disk images in a chroot on a pre-existing VM.
+
+_Note: this is a brand new (Sep 2024) fork of the LXD plugin. You probably want
+[bketelsen/packer-plugin-incus](https://github.com/bketelsen/packer-plugin-incus)._
 
 ## Installation
 
 ### Using pre-built releases
 
 #### Using the `packer init` command
+
+<details>
+<summary> packer init not yet supported </summary>
 
 Starting from version 1.7, Packer supports a new `packer init` command allowing
 automatic installation of Packer plugins. Read the
@@ -23,11 +28,13 @@ packer {
   required_plugins {
     incus = {
       version = ">= 1.0.0"
-      source  = "github.com/dontlaugh/incus"
+      source  = "github.com/dontlaugh/incuschroot"
     }
   }
 }
 ```
+
+</details>
 
 ## Development
 

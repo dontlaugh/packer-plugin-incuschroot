@@ -2,6 +2,6 @@ main
 dist/*
 packer-plugin-scaffolding
 .docs
-packer-plugin-incus
+packer-plugin-incuschroot
 .idea
 LICENSE.txt

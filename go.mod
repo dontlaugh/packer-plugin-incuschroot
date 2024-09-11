@@ -1,4 +1,4 @@
-module github.com/dontlaugh/packer-plugin-incus
+module github.com/dontlaugh/packer-plugin-incuschroot
 
 go 1.23
 
