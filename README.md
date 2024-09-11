@@ -1,4 +1,4 @@
-_Note: this is a brand new (Sep 2024) fork of the LXD plugin_
+_Note: this is a brand new (Sep 2024) fork of the LXD plugin. You probably want [bketelsen/packer-plugin-incus](https://github.com/bketelsen/packer-plugin-incus)._
 
 # Packer Plugin Incus
 
